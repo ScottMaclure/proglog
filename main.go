@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"internal/server/log"
+	"github.com/ScottMaclure/proglog/internal/server"
 )
 
 func main() {
-	log := log.NewLog()
+	log := server.NewLog()
 	fmt.Println("Log:", log)
 }

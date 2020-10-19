@@ -1,11 +1,17 @@
 package server
 
+import (
+	"fmt"
+	"sync"
+)
+
 type Log struct {
 	mux     sync.Mutex
 	records []Record
 }
 
 func NewLog() *Log {
+	fmt.Println("NewLog called!")
 	return &Log{}
 }
 

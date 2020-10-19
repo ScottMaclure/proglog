@@ -1,3 +1,3 @@
-module github.com/scottmaclure/proglog
+module github.com/ScottMaclure/proglog
 
 go 1.15
