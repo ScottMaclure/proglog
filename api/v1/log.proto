@@ -4,12 +4,16 @@ syntax = "proto3";
 // Helps reduce naming conflicts.
 package log.v1;
 
-import "gogoproto/gogo.proto";
+// From https://developers.google.com/protocol-buffers/docs/gotutorial
+// import "google/protobuf/timestamp.proto"; // unused
+option go_package = "github.com/ScottMaclure/proglog/api/v1";
 
+// Gogoproto code
+// import "gogoproto/gogo.proto";
 // Tells the compiler to turn on some standard features: marshaling and sizing.
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
-option (gogoproto.sizer_all) = true;
+// option (gogoproto.marshaler_all) = true;
+// option (gogoproto.unmarshaler_all) = true;
+// option (gogoproto.sizer_all) = true;
 
 // Basically in protobuf = message, Go = struct.
 // Name and type order are swapped, the number is the field id?
