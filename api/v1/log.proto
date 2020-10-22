@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+// Used as Go code package name.
+// Helps reduce naming conflicts.
+package log.v1;
+
+import "gogoproto/gogo.proto";
+
+// Tells the compiler to turn on some standard features: marshaling and sizing.
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+
+// Basically in protobuf = message, Go = struct.
+// Name and type order are swapped, the number is the field id?
+message Record {
+    bytes value = 1;
+    uint64 offset = 2;
+}
+
+// TODO p18 - "repeated Record records" for []Record is put where?
+message Records {
+    repeated Record record = 1;
+}
