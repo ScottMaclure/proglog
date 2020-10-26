@@ -46,6 +46,7 @@ func newIndex(f *os.File, c Config) (*index, error) {
 	}
 
 	idx.size = uint64(fi.Size())
+
 	if err = os.Truncate(
 		f.Name(), int64(c.Segment.MaxIndexBytes),
 	); err != nil {
@@ -113,6 +114,8 @@ func (i *index) Name() string {
 // Close makes sure the mmap'ed file has persisted data to file before closing. For restarts, etc.
 func (i *index) Close() error {
 	if err := i.mmap.Sync(gommap.MS_SYNC); err != nil {
+		// FIXME During unit testing, this produces an error (Win10).
+		// "FlushFileBuffers: The handle is invalid"
 		return err
 	}
 
