@@ -5,7 +5,7 @@ syntax = "proto3";
 package log.v1;
 
 // From https://developers.google.com/protocol-buffers/docs/gotutorial
-// import "google/protobuf/timestamp.proto"; // unused
+// import "google/protobuf/timestamp.proto"; // unused?
 option go_package = "github.com/ScottMaclure/proglog/api/v1";
 // option go_package = "api/v1";
 
