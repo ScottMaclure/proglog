@@ -11,6 +11,8 @@ export GOPATH=/E/MEGA/dev/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
 
+# 1) Using gogoproto (broken for me)
+
 go get github.com/gogo/protobuf/...@v1.3.1
 
 protoc api/v1/*.proto \
@@ -18,11 +20,13 @@ protoc api/v1/*.proto \
 --proto_path=$(go list -f '{{ .Dir }}' -m github.com/gogo/protobuf) \
 --proto_path=.
 
-# Using Google's compiler
+# 2) Using Go protocol buffers plugin
 
 go install google.golang.org/protobuf/cmd/protoc-gen-go
 
-protoc -I=api/v1 --go_out=api/v1 *.proto
+# From project root
+# protoc -I=api/v1 --go_out=api/v1 *.proto 
+protoc --go_out=. api/v1/*.proto 
 
 # Ubuntu/Bash
 sudo apt install golang-go

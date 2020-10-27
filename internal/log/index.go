@@ -126,7 +126,7 @@ func (i *index) Close() error {
 	// FIXME I get truncate /tmp/index_test304634471: invalid argument
 	fmt.Println("Truncate to", int64(i.size))
 	if err := i.file.Truncate(int64(i.size)); err != nil {
-		return err
+		return err // FIXME Always bombs out here with "invalid argument"
 	}
 	// if err := os.Truncate(i.file.Name(), int64(i.size)); err != nil {
 	// panic(err)
