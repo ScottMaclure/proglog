@@ -11,12 +11,12 @@ import (
 )
 
 func TestIndex(t *testing.T) {
-	f, err := ioutil.TempFile(os.TempDir(), "index_test")
+	f, err := ioutil.TempFile(os.TempDir(), "index_test_foo")
 	require.NoError(t, err)
 
-	fmt.Println("Testing with file", f.Name())
-
 	defer os.Remove(f.Name())
+
+	fmt.Println("Testing with file", f.Name())
 
 	c := Config{}
 	c.Segment.MaxIndexBytes = 1024
@@ -60,7 +60,7 @@ func TestIndex(t *testing.T) {
 	require.NoError(t, err)
 
 	// index should build its state from existing file
-	f, _ = os.OpenFile(f.Name(), os.O_RDWR, 0600)
+	f, _ = os.OpenFile(f.Name(), os.O_RDWR, 0644)
 	idx, err = newIndex(f, c)
 	require.NoError(t, err)
 

@@ -11,6 +11,7 @@
 package log
 
 import (
+	"fmt"
 	"io"
 	"os"
 
@@ -47,9 +48,7 @@ func newIndex(f *os.File, c Config) (*index, error) {
 
 	idx.size = uint64(fi.Size())
 
-	if err = os.Truncate(
-		f.Name(), int64(c.Segment.MaxIndexBytes),
-	); err != nil {
+	if err = os.Truncate(f.Name(), int64(c.Segment.MaxIndexBytes)); err != nil {
 		return nil, err
 	}
 
@@ -113,9 +112,9 @@ func (i *index) Name() string {
 
 // Close makes sure the mmap'ed file has persisted data to file before closing. For restarts, etc.
 func (i *index) Close() error {
+
 	if err := i.mmap.Sync(gommap.MS_SYNC); err != nil {
-		// FIXME During unit testing, this produces an error (Win10).
-		// "FlushFileBuffers: The handle is invalid"
+		// FIXME During unit testing, this produces an error (Win10/amd64): "FlushFileBuffers: The handle is invalid"
 		return err
 	}
 
@@ -124,9 +123,16 @@ func (i *index) Close() error {
 	}
 
 	// Shrink back down, to enable re-start to work again (i.e. Graceful shutdown).
+	// FIXME I get truncate /tmp/index_test304634471: invalid argument
+	fmt.Println("Truncate to", int64(i.size))
 	if err := i.file.Truncate(int64(i.size)); err != nil {
 		return err
 	}
+	// if err := os.Truncate(i.file.Name(), int64(i.size)); err != nil {
+	// panic(err)
+	// return err
+	// }
 
 	return i.file.Close()
+
 }
