@@ -24,9 +24,7 @@ protoc api/v1/*.proto \
 
 go install google.golang.org/protobuf/cmd/protoc-gen-go
 
-# From project root
-# protoc -I=api/v1 --go_out=api/v1 *.proto 
-protoc --go_out=. api/v1/*.proto 
+./make.sh
 
 # Ubuntu/Bash
 sudo apt install golang-go
